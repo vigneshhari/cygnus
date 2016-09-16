@@ -31,7 +31,7 @@ STATICFILES_DIRS = (
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = '&5+h(wh0fl5vmfi%w13$8euz_^e(_nai-20s$9cdzy90@ro21_'
 
-SECURE_PROXY_SSL_HEADER = (‘HTTP_X_FORWARDED_PROTO’, ‘https’)
+SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
 
 
 # SECURITY WARNING: don't run with debug turned on in production!
