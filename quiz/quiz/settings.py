@@ -20,20 +20,26 @@ BASE_DIR = os.path.dirname(os.path.dirname(__file__))
 TEMPLATE_DIRS = (
     os.path.join(BASE_DIR, 'templates'),
 )
-STATICFILES_DIRS = (  os.path.join(BASE_DIR, 'static'), )
-STATIC_ROOT = ( os.path.join(BASE_DIR, 'static'), )
+STATIC_URL = '/static/'
+STATIC_ROOT = 'staticfiles'
+STATICFILES_DIRS = (
+    os.path.join(BASE_DIR, 'static'),
+)
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/1.7/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = '&5+h(wh0fl5vmfi%w13$8euz_^e(_nai-20s$9cdzy90@ro21_'
 
+SECURE_PROXY_SSL_HEADER = (‘HTTP_X_FORWARDED_PROTO’, ‘https’)
+
+
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
 TEMPLATE_DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['https://desolate-mesa-47713.herokuapp.com/']
 
 
 # Application definition
@@ -86,6 +92,9 @@ DATABASES = {
 
     }
 
+import dj_database_url
+
+DATABASES[‘default’] = dj_database_url.config()
 # Internationalization
 # https://docs.djangoproject.com/en/1.7/topics/i18n/
 
