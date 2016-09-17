@@ -81,7 +81,7 @@ def attempt(request):
 	for i in quiz_history:
 		return HttpResponseRedirect('/quiz/dash')
 	quizdata = Quiz_data.objects.all().filter(quiz_id = quizid)
-	quizinfo = Quiz_data.objects.all().filter(quiz_id = quizid)
+	quizinfo = Quiz.objects.all().filter(quiz_id = quizid)
 	for i in quizinfo:
 		quizname = i.quizname
 	request.session['quizid'] = quizid
