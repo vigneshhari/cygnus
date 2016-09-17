@@ -37,7 +37,7 @@ SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
 
-TEMPLATE_DEBUG = False
+TEMPLATE_DEBUG = True
 
 ALLOWED_HOSTS = ['https://desolate-mesa-47713.herokuapp.com/']
 
@@ -91,10 +91,10 @@ DATABASES = {
         }
 
     }
-'''
+
 import dj_database_url
 DATABASES['default'] = dj_database_url.config()
-'''
+
 
 # Internationalization
 # https://docs.djangoproject.com/en/1.7/topics/i18n/
