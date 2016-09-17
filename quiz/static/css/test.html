@@ -1,0 +1,80 @@
+{% load static %}
+
+<head>
+
+<link href="bootstrap.min.css" rel="stylesheet">
+<link href="quiz.css" rel="stylesheet">
+<link href="materialize.min.css" rel="stylesheet">
+
+  <nav>
+    <div class="nav-wrapper">
+      <a href="#" class="brand-logo center">Logo</a>
+      <a class="brand-logo">Welcome {{name}}</a>
+
+    </div>
+  </nav>
+        
+</head>
+
+
+
+<form action = "/quiz/quizvalidate" type="GET">
+<div class="cont">
+
+
+{%for e in data%}
+  {%if e.question_type == "option"%}
+<h2>{{e.question}}</h2>
+  <ul>
+  <li>
+    <input type="radio" id="{{e.Option1}}" name="{{e.qid}}" value="{{e.Option1}}" selected="selected">
+    <label for="{{e.Option1}}">{{e.Option1}}</label>
+    <div class="chk"></div>
+  </li>
+  
+  <li>
+    <input type="radio" id="{{e.Option2}}" name="{{e.qid}}" value="{{e.Option2}}">
+    <label for="{{e.Option2}}">{{e.Option2}}</label>
+    <div class="chk"><div class="inside"></div></div>
+  </li>
+  {%if e.Option3 != "null"%}
+  <li>
+    <input type="radio" id="{{e.Option3}}" name="{{e.qid}}" value="{{e.Option3}}">
+    <label for="{{e.Option3}}">{{e.Option3}}</label>
+    <div class="chk"><div class="inside"></div></div>
+  </li>
+  {%endif%} 
+  {%if e.Option4 != "null"%}
+  <li>
+    <input type="radio" id="{{e.Option4}}" name="{{e.qid}}" value="{{e.Option4}}">
+    <label for="{{e.Option4}}">{{e.Option4}}</label>
+    <div class="chk"><div class="inside"></div></div>
+  </li>
+  {%endif%}   
+</ul>
+
+{%endif%} 
+   
+{%if e.question_type == "text"%}
+  <h2>{{e.question}}</h2>
+  <input class="input-field col s12" type="text" name="{{e.qid}}" placeholder="Enter The Answer Here" value="Answer">
+</div>
+{%endif%}
+<br>
+<br>
+
+{%endfor%}
+<br>
+<br>
+<br>
+<br>
+<div class="signature">
+   <p><button class="btn waves-effect waves-light" type="submit" >Submit
+   </button> 	
+   <button type = "reset"  class="waves-effect waves-light btn">Reset
+  </button>
+  </p>
+  <p>Summit 2016 <i class="much-heart"></i> Intestellar </p>
+  </div>
+      {%csrf_token%}
+</form>
