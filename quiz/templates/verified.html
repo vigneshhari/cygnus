@@ -1,7 +1,77 @@
-<h3 align = 'center'> Verification Page </h3>
-<br>
-<h4 align = 'center'> Please Enter the unique id you recieved in your email adress to continue :) </h4>
-<form action = 'app/verified' type = 'GET'>
-<h1 align="Center"><input type = 'text' name = 'veri'></h1>
-<input type = 'text' hidden value = {{id}} name = 'id' >
-<h1 align="Center"><input type="Submit" value="Verify" name="Verify"></h1>
+
+
+<!--
+	Author: W3layouts
+	Author URL: http://w3layouts.com
+	License: Creative Commons Attribution 3.0 Unported
+	License URL: http://creativecommons.org/licenses/by/3.0/
+-->
+
+
+
+<!DOCTYPE html>
+<html>
+
+<!-- Head -->
+<head>
+{% load static %}
+	<title>Login/Signup</title>
+
+	<!-- Meta-Tags -->
+
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+
+	<!-- //Meta-Tags -->
+
+	<!-- Style --> <link rel="stylesheet" href="{% static 'css/stylelogin.css' %}" type="text/css" media="all">
+
+	<!-- Fonts -->
+		<link href="//fonts.googleapis.com/css?family=Roboto:100,300,400,500,700,900" rel="stylesheet">
+	<!-- //Fonts -->
+
+</head>
+<!-- //Head -->
+
+<!-- Body -->
+
+<!-- //Body -->
+
+<body>
+
+	<h1>INTERSTELLAR</h1>
+
+	<div class="container w3layouts agileits">
+
+		<div class="login w3layouts agileits">
+		<h2>Verification Page</h2>
+						
+			<form action="/app/verified" method="get">
+			      {%csrf_token%}
+			      <input type = 'text' name = 'veri' placeholder="Verification Code" required="" >
+				<input type = 'text' hidden value = {{id}} name = 'id' >			
+			<div class="send-button w3layouts agileits">
+					<input type="submit" value="Verify">
+			</div>
+				</form>
+					&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+					
+			
+			<div class="clear"></div>
+		</div>
+
+		<div class="register w3layouts agileits">
+			
+			</div>
+			<div class="clear"></div>
+		</div>
+
+		<div class="clear"></div>
+
+	</div>
+
+	
+
+</body>
+
+</html>

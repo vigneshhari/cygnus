@@ -1,9 +1,68 @@
-<h3 align = "center" >Welcome to CEC QUIZ</h3>
-<br><br><br>
-<form action = "/app/loginpage" >
-<h3 align = 'center' ><input align="center" type = "SUBMIT" value = "LOG IN"></h3>
-</form>
-<br>
-<form action = "/app/signuppage">
-<h3 align = 'center'><input align="center" type = "SUBMIT" value = "SIGN UP"></h3>
-</form>
+<!--A Design by W3layouts 
+Author: W3layout
+Author URL: http://w3layouts.com
+License: Creative Commons Attribution 3.0 Unported
+License URL: http://creativecommons.org/licenses/by/3.0/
+-->
+<!DOCTYPE html>
+<html>
+<head>
+<title>Intestellar</title>
+{% load static %}
+
+<link href="{% static 'css/bootstrap.css' %}" rel="stylesheet" type="text/css" media="all" />
+<!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+
+
+<link href="{% static 'css/style.css' %}" rel="stylesheet" type="text/css" media="all" />	
+<!--//theme-style-->
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<!---->
+<link href='//fonts.googleapis.com/css?family=Catamaran:400,100,300,500,700,600,800,900' rel='stylesheet' type='text/css'>
+<link href='//fonts.googleapis.com/css?family=Montserrat:400,700' rel='stylesheet' type='text/css'>
+</head>
+<body>
+ <div class="header">
+	<div class="container">
+		<div class="head-top">
+			<div class="logo">
+				<div class="banner-text"><h2>Intestellar Quiz
+				</h2>
+					<p>Summit 16 </p>
+ 			    </div>
+			</div>
+			<div class="login">
+				<ul class="nav-login">
+					<li><a href="/app/login" data-toggle="modal" data-target="#myModal1">Login/Signup</a></li>
+				</ul>
+			</div>
+			<div class="clearfix"></div>
+		</div>
+	</div>
+		
+</div> 
+
+	
+<!---->
+<!--footer-->
+<div class="footer">
+	<div class="container">
+		<div class="col-md-6 footer-left">
+			<h3>Information</h3>
+			<p class="para">Quiz Information</p>
+			
+		</div>
+		<div class="col-md-6 footer-right">
+			<h3>Contact Us</h3>
+			<ul class="con-icons">
+				<li><span class="glyphicon glyphicon-phone" aria-hidden="true"></span>+9562854642</li>
+				<li><a href="mailto:info@example.com"><span class="glyphicon glyphicon-envelope" aria-hidden="true"></span>info@test.com</a></li>
+			</ul>
+		</div>
+		<div class="clearfix"></div>
+	</div>
+</div>
+<!--//footer-->
+</body>
+</html>

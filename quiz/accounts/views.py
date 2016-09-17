@@ -18,14 +18,14 @@ def signup(request):
 def loginprocess(request):
 	mail =  request.POST.get("username","")
 	password = request.POST.get("password","")
-	if(len(mail) == 0 or len(password) == 0):
-		return render(request,'login.html',{'message' : 'Invalid Username/Password'  })
+	if(len(mail) == 0 and len(password) == 0):
+		return render(request,'login.html',{'loginmessage' : ''  })
 	user_data = User_Account.objects.all().filter(mail = mail)
 	got = True
 	for e in user_data:
 		got = False
 	if(got):
-		return render(request,'login.html',{'message' : 'Email id Does Not Exist Please Signup '})
+		return render(request,'login.html',{'loginmessage' : 'Email id Does Not Exist Please Signup '})
 	_id = 0
 	_ver = 0
 	for e in user_data:
@@ -33,7 +33,7 @@ def loginprocess(request):
 		_id = e.id
 		vericode = e.vericode
 		if(e.password != password):
-			return render(request,'login.html',{'message' : 'Password/Emailid entered is wrong please Try again' })
+			return render(request,'login.html',{'loginmessage' : 'Password/Emailid entered is wrong please Try again' })
 	print _ver
 	if(_ver == 0):
 		return render(request,'verified.html', {'id' : _id} )
@@ -49,27 +49,27 @@ def signupprocess(request):
 	mail = request.GET.get('email','')
 	dict = {'name' : name , 'phonenumber' : phone,'email' : mail, 'message' : 'Error'}
 	if(password == '' or  password.__len__() >= 100 or password.__len__() <= 7):
-		dict['message'] = "Enter a valid password ** It should contain more than 7 charecters ** "
-		return render(request,'signup.html',dict)
+		dict['signupmessage'] = "Enter a valid password ** It should contain more than 7 charecters ** "
+		return render(request,'login.html',dict)
 	elif(name == ''):
-		dict['message'] = "Enter a valid name"
-		return render(request,'signup.html',dict)
+		dict['signupmessage'] = "Enter a valid name"
+		return render(request,'login.html',dict)
 	elif(mail == '' or mail.rfind('@') == -1):
-		dict['message'] = "Enter a valid Email-Address"
-		return render(request,'signup.html',dict)
+		dict['signupmessage'] = "Enter a valid Email-Address"
+		return render(request,'login.html',dict)
 	try:
 		phone = int(phone)
 	except Exception, e:
-		dict['message'] = "Enter a valid phone number"
-		return render(request,'signup.html',dict)
+		dict['signupmessage'] = "Enter a valid phone number"
+		return render(request,'login.html',dict)
 	data = User_Account.objects.all();vals = 0
 	email_check = User_Account.objects.all().filter(mail = mail)
 	for y in email_check :
-		dict['message'] = "This Email-Address is already in use . Please try again with another Email "
-		return render(request,'signup.html',dict)
+		dict['signupmessage'] = "This Email-Address is already in use . Please try again with another Email "
+		return render(request,'login.html',dict)
 	for e in data :vals+=1
 	new_user_id = vals +  1
-	sender  = 'Vignesh@cecsd.xyz'
+	sender  = 'vignesh@cecsd.esy.es'
 	reciever = mail 
 	vericode = ''.join(random.choice('0123456789ABCDEF') for i in range(16))
 	print vericode 
@@ -78,28 +78,28 @@ def signupprocess(request):
 				This is a Verification Message
 				Please enter the Verification code in the registration process or enter the key after logging in with
 				the provided username and password
+				Please Do Keep this message and the verification code for further use
 					
 				The verification code is  {}
 
-					Intestellar Support
+					Intestellar Team :)
 
 					 DO not Reply To this message 
 				""".format(name,vericode)
 	try:
-   		pass
-   		#server = smtplib.SMTP('mail.smtp2go.com',2525)
-		#server.login('vichuhari100@yahoo.com','24720480')
-		#server.sendmail(sender, reciever, message)
-		#server.quit()
+   		server = smtplib.SMTP('smtp-pulse.com',2525)
+		server.login('vignesh@cecsd.esy.es','nj3tLLbsK2fPRM')
+		server.sendmail(sender, reciever, message)
+		server.quit()
 	except Exception, e:
 		print e
-   		dict['message'] = "Invalid Email Address or Try again Later" 
-		return render(request,'signup.html',dict)
+   		dict['signupmessage'] = "Invalid Email Address or Try again Later" 
+		return render(request,'login.html',dict)
 	response = HttpResponse('blah') 
 	response.set_cookie( 'user_id', new_user_id )
 	p = User_Account(mail = mail,password=password,user_id=new_user_id,name=name,phone_no=phone,vericode=vericode,verified=0,score=0)
 	p.save()
-	return render(request, 'login.html')
+	return render(request, 'login.html' , {'loginmessage' : "Please Login To Continue"})
 
 def verified(request):
 	id = request.GET.get('id')
@@ -110,5 +110,7 @@ def verified(request):
 		print vericode
 		if(str(e.vericode) == str(vericode)):
 			User_Account.objects.filter(id = id).update(verified = 1)
-			return HttpResponseRedirect('/app')
+			request.session['logid'] = id
+			request.session['vericode'] = vericode
+			return HttpResponseRedirect('/quiz/dash')
 	return render(request,'verified.html',{'id' : id})
