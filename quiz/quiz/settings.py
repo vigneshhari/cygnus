@@ -81,7 +81,18 @@ WSGI_APPLICATION = 'quiz.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/1.7/ref/settings/#databases
 
-
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'NAME': 'd7sumlgl2ovmpg',
+        'USER': 'gncunxinnnspnm',
+        'PASSWORD': 'qt6f1RKkDS7U8L0sCeK3AqM4mW',
+        'HOST': 'ec2-54-243-207-17.compute-1.amazonaws.com',
+        'PORT': '5432',
+    }
+}
+'''
+#Old Sqlite Database
 DATABASES = {
       'default': {
         'ENGINE': 'django.db.backends.sqlite3', 
@@ -89,9 +100,9 @@ DATABASES = {
         }
 
     }
-
-import dj_database_url
-DATABASES['default'] = dj_database_url.config()
+'''
+#import dj_database_url
+#DATABASES['default'] = dj_database_url.config()
 
 
 # Internationalization
