@@ -9,7 +9,8 @@
   <nav>
     <div class="nav-wrapper">
       <a href="#" class="brand-logo center">Logo</a>
-      <a class="brand-logo">Welcome {{name}}</a>
+      
+      <a class="place">&nbsp;&nbsp; Welcome {{name}}</a>
 
     </div>
   </nav>
@@ -60,9 +61,8 @@
   <input class="input-field col s12" type="text" name="{{e.qid}}" placeholder="Enter The Answer Here" value="">
 </div>
 {%endif%}
-<br>
-<br>
-
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 {%endfor%}
 <br>
 <br>
@@ -74,7 +74,9 @@
    <button type = "reset"  class="waves-effect waves-light btn">Reset
   </button>
   </p>
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
   <p>Summit 2016 <i class="much-heart"></i> Intestellar </p>
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
   </div>
       {%csrf_token%}
 </form>

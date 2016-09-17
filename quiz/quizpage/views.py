@@ -81,6 +81,9 @@ def attempt(request):
 	for i in quiz_history:
 		return HttpResponseRedirect('/quiz/dash')
 	quizdata = Quiz_data.objects.all().filter(quiz_id = quizid)
+	quizinfo = Quiz_data.objects.all().filter(quiz_id = quizid)
+	for i in quizinfo:
+		quizname = i.quizname
 	request.session['quizid'] = quizid
 	temp = 1
 	data = []
@@ -88,7 +91,7 @@ def attempt(request):
 		print temp
 		data.append({'qid' : temp , 'question' : e.question , 'question_type' : e.question_type , 'Option1' : e.Option1 ,'Option2' : e.Option2 ,'Option3' : e.Option3 ,'Option4' : e.Option4})
 		temp = temp + 1
-	return render(request,'quiz.html',{'name' : name , 'data' : data})
+	return render(request,'quiz.html',{'name' : name , 'data' : data ,'quizname':quizname})
 
 def validate(request):
 	try:
