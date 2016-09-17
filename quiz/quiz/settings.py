@@ -39,7 +39,7 @@ DEBUG = False
 
 TEMPLATE_DEBUG = True
 
-ALLOWED_HOSTS = ['https://desolate-mesa-47713.herokuapp.com/']
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition
