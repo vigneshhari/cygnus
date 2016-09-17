@@ -104,6 +104,7 @@ def signupprocess(request):
 		dict['signupmessage'] = "Invalid Email Address or Try again Later" 
 		return render(request,'login.html',dict)
 	response = HttpResponse('blah') 
+	print vericode
 	response.set_cookie( 'user_id', new_user_id )
 	p = User_Account(mail = mail,password=password,user_id=new_user_id,name=name,phone_no=phone,vericode=vericode,verified=0,score=0)
 	p.save()
@@ -112,12 +113,13 @@ def signupprocess(request):
 def verified(request):
 	id = request.GET.get('id')
 	vericode = request.GET.get('veri')
-	dat = User_Account.objects.all().filter(id = id)
+	print "came here"
+	dat = User_Account.objects.all().filter(user_id = id)
 	for e in dat:
 		print e.vericode
 		print vericode
 		if(str(e.vericode) == str(vericode)):
-			User_Account.objects.filter(id = id).update(verified = 1)
+			User_Account.objects.filter(user_id = id).update(verified = 1)
 			request.session['logid'] = id
 			request.session['vericode'] = vericode
 			return HttpResponseRedirect('/quiz/dash')
