@@ -30,11 +30,10 @@ def loginprocess(request):
 	_ver = 0
 	for e in user_data:
 		_ver = e.verified
-		_id = e.id
+		_id = e.user_id
 		vericode = e.vericode
 		if(e.password != password):
 			return render(request,'login.html',{'loginmessage' : 'Password/Emailid entered is wrong please Try again' })
-	print _ver
 	if(_ver == 0):
 		return render(request,'verified.html', {'id' : _id} )
 	request.session['logid'] = _id  

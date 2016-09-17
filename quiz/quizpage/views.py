@@ -11,15 +11,16 @@ def dash(request):
 		_id = request.session['logid']
 		vericode = request.session['vericode']
 	except Exception, e:
-		return render(request,'login.html',{'message' : 'Please Login Again to Continue'  })
+		return render(request,'login.html',{'loginmessage' : 'Please Login Again to Continue'  })
+	print _id , vericode
 	acc = User_Account.objects.all().filter(user_id = _id)
 	quiz = Quiz_history.objects.all().filter(user_id = _id)
 	quiz_info = Quiz.objects.all() 
 	for h in acc:
-		name = h.name
 		check = h.vericode
+		name = h.name
 		score = h.score
-	if(check != vericode):return render(request,'login.html',{'message' : 'Please Login Again to Continue'  })
+	if(check != vericode):return render(request,'login.html',{'loginmessage' : 'Please Login Again to Continue'  })
 	done = 0
 	avail = 0
 	done_quiz = []
@@ -28,7 +29,7 @@ def dash(request):
 		done_quiz.append(k.quiz_id)
 	for i in quiz_info:
 		if(i.quiz_id not in done_quiz):avail = avail + 1
-	return render(request,'dash.html',{'name' : name , 'score' : score,'done':done , 'avail' : avail})
+	return render(request,'dash.html',{'name' : name , 'score' : score, 'done':done , 'avail' : avail})
 
 def attempted(request):
 	try:
@@ -39,7 +40,8 @@ def attempted(request):
 	acc = User_Account.objects.all().filter(user_id = _id)
 	for h in acc:
 		name = h.name
-		if(vericode != h.vericode):return render(request,'login.html',{'message' : 'Please Login Again to Continue'  })
+		check = h.vericode
+	if(check != vericode):return render(request,'login.html',{'message' : 'Please Login Again to Continue'  })
 	data = Quiz_history.objects.all().filter(user_id = _id)
 	return render(request,'quizold.html',{'name' : name , 'data' : data })
 
@@ -52,7 +54,8 @@ def avaliable(request):
 	acc = User_Account.objects.all().filter(user_id = _id)
 	for h in acc:
 		name = h.name
-		if(vericode != h.vericode):return render(request,'login.html',{'message' : 'Please Login Again to Continue'  })
+		check = h.vericode
+	if(check != vericode):return render(request,'login.html',{'message' : 'Please Login Again to Continue'  })
 	quiz = Quiz_history.objects.all().filter(user_id = _id)
 	quiz_info = Quiz.objects.all() 
 	done_quiz = []
@@ -75,7 +78,8 @@ def attempt(request):
 	acc = User_Account.objects.all().filter(user_id = _id)
 	for h in acc:
 		name = h.name
-		if(vericode != h.vericode):return render(request,'login.html',{'message' : 'Please Login Again to Continue'  })
+		check = h.vericode
+	if(check != vericode):return render(request,'login.html',{'message' : 'Please Login Again to Continue'  })
 	quizid =request.GET.get('id')
 	quiz_history = Quiz_history.objects.all().filter(user_id = _id ,quiz_id = quizid)
 	for i in quiz_history:
@@ -103,7 +107,8 @@ def validate(request):
 	acc = User_Account.objects.all().filter(user_id = _id)
 	for h in acc:
 		name = h.name
-		if(vericode != h.vericode):return render(request,'login.html',{'message' : 'Please Login Again to Continue'  })
+		check = h.vericode
+	if(check != vericode):return render(request,'login.html',{'message' : 'Please Login Again to Continue'  })
 	quiz_history = Quiz_history.objects.all().filter(user_id = _id ,quiz_id = quizid)
 	for i in quiz_history:
 		return HttpResponseRedirect('/quiz/dash')
@@ -136,7 +141,8 @@ def rank(request):
 	acc = User_Account.objects.all().filter(user_id = _id)
 	for h in acc:
 		name = h.name
-		if(vericode != h.vericode):return render(request,'login.html',{'message' : 'Please Login Again to Continue'  })
+		check = h.vericode
+	if(check != vericode):return render(request,'login.html',{'message' : 'Please Login Again to Continue'  })
 	Userdata = User_Account.objects.all().order_by('-score')
 	temp = []
 	pos = 1
