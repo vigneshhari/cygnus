@@ -96,7 +96,7 @@ def signupprocess(request):
 	try:
 		server = smtplib.SMTP_SSL('terminal1.veeblehosting.com',465)
 		server.login('interstellar@cecsummit.org','interstellar123@')
-		server.sendmail(sender, reciever,outer.as_string())
+		server.sendmail('interstellar@cecsummit.org', email,outer.as_string())
 		server.quit()
 		print "Sent Email"
 	except Exception, e:
@@ -172,7 +172,7 @@ def sendveri(request):
 	try:
 		server = smtplib.SMTP_SSL('terminal1.veeblehosting.com',465)
 		server.login('interstellar@cecsummit.org','interstellar123@')
-		server.sendmail(sender, reciever,outer.as_string())
+		server.sendmail('interstellar@cecsummit.org', email,outer.as_string())
 		server.quit()
 		print "Sent Email"
 	except Exception, e:
