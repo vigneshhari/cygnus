@@ -150,3 +150,5 @@ def rank(request):
 		temp.append({'pos' : pos , 'name':e.name , 'score':e.score})
 		pos = pos + 1
 	return render(request,'rank.html',{'name' : name , 'data' : temp})
+
+

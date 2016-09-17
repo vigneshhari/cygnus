@@ -8,7 +8,7 @@ urlpatterns = [
 	url(r'avaliable' , views.avaliable , name='avaliable'),
 	url(r'attempt' , views.attempt , name='attempt'),
 	url(r'quizvalidate' , views.validate , name='validate'),
-	url(r'rank' , views.rank , name='rank')
+	url(r'rank' , views.rank , name='rank'),
     ]
 
     

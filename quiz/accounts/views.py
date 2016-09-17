@@ -13,6 +13,8 @@ def index(request):
 	return render(request, 'main_page.html')
 def login(request):
 	return render(request, 'login.html')
+def forpass(request):
+	return render(request , 'forpass.html')
 def signup(request):
 	return render(request, 'signup.html' )
 def loginprocess(request):
@@ -113,3 +115,60 @@ def verified(request):
 			request.session['vericode'] = vericode
 			return HttpResponseRedirect('/quiz/dash')
 	return render(request,'verified.html',{'id' : id})
+
+def change(request):
+	email = request.GET.get('email','')
+	veri = request.GET.get('veri','')
+	new_pass = request.GET.get('pass','')
+	if(len(new_pass) < 7):
+		return render(request,"forpass.html",{'changemessage' : "Password should be longer than 7 charecters"})
+	acc = User_Account.objects.all().filter(mail = email)
+	for i in acc:
+		vericode = i.vericode
+		print vericode
+	if(vericode == veri):
+		User_Account.objects.all().filter(mail = email).update(password = new_pass)
+	else:
+		return render(request,"forpass.html",{'changemessage' : "Wrong Vericode"})
+	return render(request, 'login.html' , {'loginmessage' : "Password Changed Please Login To Continue"})
+
+def sendveri(request):
+	email = request.GET.get('email','')
+	user = User_Account.objects.all().filter(mail = email)
+	test = True
+	for i in user:
+		name = i.name
+		vericode = i.vericode
+		test = False
+	if(test):
+				return render(request,"forpass.html",{'sendmessage' : "This Email Does not Exist in our Database"})
+	sender  = 'vignesh@cecsd.esy.es'
+	message = """
+			Hello {},  
+				This is a Verification Message
+				Please enter the Verification code in the registration process or enter the key after logging in with
+				the provided username and password
+				Please Do Keep this message and the verification code for further use
+					
+				The verification code is  {}
+
+					Intestellar Team :)
+
+					 DO not Reply To this message 
+				""".format(name,vericode)
+	try:
+   		server = smtplib.SMTP('smtp-pulse.com',2525)
+		server.login('vignesh@cecsd.esy.es','nj3tLLbsK2fPRM')
+		server.sendmail(sender, reciever, message)
+		server.quit()
+	except Exception, e:
+		print e
+   		return render(request,"forpass.html",{'sendmessage' : "Invalid Email Address or Try again Later"})
+	return render(request,"forpass.html",{'sendmessage' : "Verification Code Sent"})
+
+def logout(request):
+	request.session['logid'] = '' 
+	request.session['vericode'] = ''
+	return HttpResponseRedirect('/app')
+
+    
