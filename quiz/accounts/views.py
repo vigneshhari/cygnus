@@ -79,16 +79,16 @@ def signupprocess(request):
 	outer['To'] = mail
 	outer['From'] = 'interstellar@cecsummit.org'
 	message = """
-			Hello {},  
-				This is a Verification Message
-				Please enter the Verification code in the registration process or enter the key after logging in with
-				the provided username and password
-				Please Do Keep this message and the verification code for further use
-					
-				The verification code is  {}
+			<h2>Hello {},</h2> 
+				<h3>This is a Verification Message</h3>
+				<p>Please enter the Verification code in the registration process or enter the key after logging in with
+				the provided username and password</p>
+				<h3>Please Do Keep this message and the verification code for further use</h3>
+				<br>	
+				<h3>The verification code is  {}</h3>
 
-					Intestellar Team :)
-
+					<h4>Intestellar Team :)</h4>
+					<br>
 					 DO not Reply To this message 
 				""".format(name,vericode)
 	HTML_BODY = MIMEText(message,'html')
@@ -113,11 +113,8 @@ def signupprocess(request):
 def verified(request):
 	id = request.GET.get('id')
 	vericode = request.GET.get('veri')
-	print "came here"
 	dat = User_Account.objects.all().filter(user_id = id)
 	for e in dat:
-		print e.vericode
-		print vericode
 		if(str(e.vericode) == str(vericode)):
 			User_Account.objects.filter(user_id = id).update(verified = 1)
 			request.session['logid'] = id
@@ -157,16 +154,16 @@ def sendveri(request):
 	outer['To'] = email
 	outer['From'] = 'interstellar@cecsummit.org'
 	message = """
-			Hello {},  
-				This is a Verification Message
-				Please enter the Verification code in the registration process or enter the key after logging in with
-				the provided username and password
-				Please Do Keep this message and the verification code for further use
-					
-				The verification code is  {}
+			<h2>Hello {},</h2> 
+				<h3>This is a Verification Message</h3>
+				<p>Please enter the Verification code in the registration process or enter the key after logging in with
+				the provided username and password</p>
+				<h3>Please Do Keep this message and the verification code for further use</h3>
+				<br>	
+				<h3>The verification code is  {}</h3>
 
-					Intestellar Team :)
-
+					<h4>Intestellar Team :)</h4>
+					<br>
 					 DO not Reply To this message 
 				""".format(name,vericode)
 	HTML_BODY = MIMEText(message,'html')
