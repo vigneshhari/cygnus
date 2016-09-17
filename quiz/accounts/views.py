@@ -4,9 +4,11 @@ from django.shortcuts import render
 from django.http import JsonResponse
 from models import User_Account
 from django.http import HttpResponseRedirect
+import smtplib
+from email.mime.multipart import MIMEMultipart
+from email.mime.text import MIMEText
 import random
 import datetime
-import smtplib
 import time 
 
 def index(request):
@@ -70,10 +72,12 @@ def signupprocess(request):
 		return render(request,'login.html',dict)
 	for e in data :vals+=1
 	new_user_id = vals +  1
-	sender  = 'vignesh@cecsd.esy.es'
-	reciever = mail 
 	vericode = ''.join(random.choice('0123456789ABCDEF') for i in range(16))
 	print vericode 
+	outer = MIMEMultipart('alternative')
+	outer['Subject'] = "Verify Account For Interstellar"
+	outer['To'] = mail
+	outer['From'] = 'interstellar@cecsummit.org'
 	message = """
 			Hello {},  
 				This is a Verification Message
@@ -87,14 +91,17 @@ def signupprocess(request):
 
 					 DO not Reply To this message 
 				""".format(name,vericode)
+	HTML_BODY = MIMEText(message,'html')
+	outer.attach(HTML_BODY)
 	try:
-   		server = smtplib.SMTP('smtp-pulse.com',2525)
-		server.login('vignesh@cecsd.esy.es','nj3tLLbsK2fPRM')
-		server.sendmail(sender, reciever, message)
+		server = smtplib.SMTP_SSL('terminal1.veeblehosting.com',465)
+		server.login('interstellar@cecsummit.org','interstellar123@')
+		server.sendmail(sender, reciever,outer.as_string())
 		server.quit()
+		print "Sent Email"
 	except Exception, e:
 		print e
-   		dict['signupmessage'] = "Invalid Email Address or Try again Later" 
+		dict['signupmessage'] = "Invalid Email Address or Try again Later" 
 		return render(request,'login.html',dict)
 	response = HttpResponse('blah') 
 	response.set_cookie( 'user_id', new_user_id )
@@ -143,6 +150,10 @@ def sendveri(request):
 	if(test):
 				return render(request,"forpass.html",{'sendmessage' : "This Email Does not Exist in our Database"})
 	sender  = 'vignesh@cecsd.esy.es'
+	outer = MIMEMultipart('alternative')
+	outer['Subject'] = "Verify Account For Interstellar"
+	outer['To'] = email
+	outer['From'] = 'interstellar@cecsummit.org'
 	message = """
 			Hello {},  
 				This is a Verification Message
@@ -156,14 +167,17 @@ def sendveri(request):
 
 					 DO not Reply To this message 
 				""".format(name,vericode)
+	HTML_BODY = MIMEText(message,'html')
+	outer.attach(HTML_BODY)
 	try:
-   		server = smtplib.SMTP('smtp-pulse.com',2525)
-		server.login('vignesh@cecsd.esy.es','nj3tLLbsK2fPRM')
-		server.sendmail(sender, reciever, message)
+		server = smtplib.SMTP_SSL('terminal1.veeblehosting.com',465)
+		server.login('interstellar@cecsummit.org','interstellar123@')
+		server.sendmail(sender, reciever,outer.as_string())
 		server.quit()
+		print "Sent Email"
 	except Exception, e:
 		print e
-   		return render(request,"forpass.html",{'sendmessage' : "Invalid Email Address or Try again Later"})
+		return render(request,"forpass.html",{'sendmessage' : "Invalid Email Address or Try again Later"})
 	return render(request,"forpass.html",{'sendmessage' : "Verification Code Sent"})
 
 def logout(request):
