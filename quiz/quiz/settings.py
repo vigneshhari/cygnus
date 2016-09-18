@@ -23,8 +23,8 @@ TEMPLATE_DIRS = (
     os.path.join(BASE_DIR, 'templates'),
 )
 
-STATIC_ROOT= os.path.join(BASE_DIR + "/quiz/",'staticfiles')
-STATIC_URL = (os.path.join(BASE_DIR,'static'))
+STATIC_ROOT= os.path.join(BASE_DIR,'staticfiles')
+STATIC_URL = (os.path.join(BASE_DIR + "/quiz/",'static'))
 
 STATICFILES_DIRS = (
     os.path.join(BASE_DIR, 'static'),
