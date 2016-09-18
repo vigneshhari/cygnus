@@ -22,8 +22,10 @@ BASE_DIR = os.path.dirname(os.path.dirname(__file__))
 TEMPLATE_DIRS = (
     os.path.join(BASE_DIR, 'templates'),
 )
-STATIC_URL = '/static/'
-STATIC_ROOT = '/static/'
+
+STATIC_ROOT= os.path.join(PROJECT_DIR,'staticfiles/')
+STATIC_URL = (os.path.join(PROJECT_ROOT,'static/'))
+
 STATICFILES_DIRS = (
     os.path.join(BASE_DIR, 'static'),
 )
