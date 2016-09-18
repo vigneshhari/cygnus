@@ -36,12 +36,12 @@ def attempted(request):
 		_id = request.session['logid']
 		vericode = request.session['vericode']
 	except Exception, e:
-		return render(request,'login.html',{'message' : 'Please Login Again to Continue'  })
+		return render(request,'login.html',{'loginmessage' : 'Please Login Again to Continue'  })
 	acc = User_Account.objects.all().filter(user_id = _id)
 	for h in acc:
 		name = h.name
 		check = h.vericode
-	if(check != vericode):return render(request,'login.html',{'message' : 'Please Login Again to Continue'  })
+	if(check != vericode):return render(request,'login.html',{'loginmessage' : 'Please Login Again to Continue'  })
 	data = Quiz_history.objects.all().filter(user_id = _id)
 	return render(request,'quizold.html',{'name' : name , 'data' : data })
 
@@ -50,12 +50,12 @@ def avaliable(request):
 		_id = request.session['logid']
 		vericode = request.session['vericode']
 	except Exception, e:
-		return render(request,'login.html',{'message' : 'Please Login Again to Continue'  })
+		return render(request,'login.html',{'loginmessage' : 'Please Login Again to Continue'  })
 	acc = User_Account.objects.all().filter(user_id = _id)
 	for h in acc:
 		name = h.name
 		check = h.vericode
-	if(check != vericode):return render(request,'login.html',{'message' : 'Please Login Again to Continue'  })
+	if(check != vericode):return render(request,'login.html',{'loginmessage' : 'Please Login Again to Continue'  })
 	quiz = Quiz_history.objects.all().filter(user_id = _id)
 	quiz_info = Quiz.objects.all() 
 	done_quiz = []
@@ -74,12 +74,12 @@ def attempt(request):
 		_id = request.session['logid']
 		vericode = request.session['vericode']
 	except Exception, e:
-		return render(request,'login.html',{'message' : 'Please Login Again to Continue'  })
+		return render(request,'login.html',{'loginmessage' : 'Please Login Again to Continue'  })
 	acc = User_Account.objects.all().filter(user_id = _id)
 	for h in acc:
 		name = h.name
 		check = h.vericode
-	if(check != vericode):return render(request,'login.html',{'message' : 'Please Login Again to Continue'  })
+	if(check != vericode):return render(request,'login.html',{'loginmessage' : 'Please Login Again to Continue'  })
 	quizid =request.GET.get('id')
 	quiz_history = Quiz_history.objects.all().filter(user_id = _id ,quiz_id = quizid)
 	for i in quiz_history:
@@ -103,12 +103,12 @@ def validate(request):
 		_id = request.session['logid']
 		vericode = request.session['vericode']
 	except Exception, e:
-		return render(request,'login.html',{'message' : 'Please Login Again to Continue'  })
+		return render(request,'login.html',{'loginmessage' : 'Please Login Again to Continue'  })
 	acc = User_Account.objects.all().filter(user_id = _id)
 	for h in acc:
 		name = h.name
 		check = h.vericode
-	if(check != vericode):return render(request,'login.html',{'message' : 'Please Login Again to Continue'  })
+	if(check != vericode):return render(request,'login.html',{'loginmessage' : 'Please Login Again to Continue'  })
 	quiz_history = Quiz_history.objects.all().filter(user_id = _id ,quiz_id = quizid)
 	for i in quiz_history:
 		return HttpResponseRedirect('/quiz/dash')
@@ -116,7 +116,6 @@ def validate(request):
 	for h in acc:
 		oldscore = h.score
 		name = h.name
-		if(vericode != h.vericode):return render(request,'login.html',{'message' : 'Please Login Again to Continue'})
 	quizdata = Quiz_data.objects.all().filter(quiz_id = quizid)
 	temp = 1
 	score = 0
@@ -137,12 +136,12 @@ def rank(request):
 		_id = request.session['logid']
 		vericode = request.session['vericode']
 	except Exception, e:
-		return render(request,'login.html',{'message' : 'Please Login Again to Continue'  })
+		return render(request,'login.html',{'loginmessage' : 'Please Login Again to Continue'  })
 	acc = User_Account.objects.all().filter(user_id = _id)
 	for h in acc:
 		name = h.name
 		check = h.vericode
-	if(check != vericode):return render(request,'login.html',{'message' : 'Please Login Again to Continue'  })
+	if(check != vericode):return render(request,'login.html',{'loginmessage' : 'Please Login Again to Continue'  })
 	Userdata = User_Account.objects.all().order_by('-score')
 	temp = []
 	pos = 1
