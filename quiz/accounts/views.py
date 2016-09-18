@@ -125,7 +125,7 @@ def verified(request):
 			User_Account.objects.filter(user_id = id).update(verified = 1)
 			request.session['logid'] = id
 			request.session['vericode'] = vericode
-			return HttpResponseRedirect('/quiz/dash')
+			return render(request, 'login.html' , {'loginmessage' : "Account Verified Login To Continue"})
 	return render(request,'verified.html',{'id' : id})
 
 def change(request):
