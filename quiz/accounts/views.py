@@ -11,6 +11,8 @@ import random
 import datetime
 import time 
 
+
+
 def index(request):
 	return render(request, 'main_page.html')
 def login(request):
@@ -78,6 +80,7 @@ def signupprocess(request):
 	outer['Subject'] = "Verify Account For Interstellar"
 	outer['To'] = mail
 	outer['From'] = 'interstellar@cecsummit.org'
+	verilink = "https://interstellarquiz.herokuapp.com/app/verified?id=" + str(new_user_id) + "&veri=" + vericode
 	message = """
 			<h2>Hello {},</h2> 
 				<h3>This is a Verification Message</h3>
@@ -85,12 +88,15 @@ def signupprocess(request):
 				the provided username and password</p>
 				<h3>Please Do Keep this message and the verification code for further use</h3>
 				<br>	
+				<a href = "{}">Click Here To Continue Login process </a>
+				<br>
+				<p>If the above link is not working please enter the Verification Code Manually</p>
+				<br>
 				<h3>The verification code is  {}</h3>
-
 					<h4>Intestellar Team :)</h4>
 					<br>
 					 DO not Reply To this message 
-				""".format(name,vericode)
+				""".format(name,verilink,vericode)
 	HTML_BODY = MIMEText(message,'html')
 	outer.attach(HTML_BODY)
 	try:
@@ -108,7 +114,7 @@ def signupprocess(request):
 	response.set_cookie( 'user_id', new_user_id )
 	p = User_Account(mail = mail,password=password,user_id=new_user_id,name=name,phone_no=phone,vericode=vericode,verified=0,score=0)
 	p.save()
-	return render(request, 'login.html' , {'loginmessage' : "Please Login To Continue"})
+	return render(request, 'login.html' , {'loginmessage' : "Please Log In To Continue"})
 
 def verified(request):
 	id = request.GET.get('id')

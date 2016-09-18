@@ -14,8 +14,10 @@ https://docs.djangoproject.com/en/1.7/ref/settings/
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 from config import *
+
 import os
 BASE_DIR = os.path.dirname(os.path.dirname(__file__))
+
 
 TEMPLATE_DIRS = (
     os.path.join(BASE_DIR, 'templates'),
@@ -29,6 +31,7 @@ STATICFILES_DIRS = (
 # See https://docs.djangoproject.com/en/1.7/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
+
 SECRET_KEY = '&5+h(wh0fl5vmfi%w13$8euz_^e(_nai-20s$9cdzy90@ro21_'
 
 SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
@@ -55,6 +58,9 @@ INSTALLED_APPS = (
     'accounts',
     'quizpage',
 )
+SOCIAL_AUTH_STORAGE = 'social.apps.django_app.me.models.DjangoStorage'
+
+
 
 MIDDLEWARE_CLASSES = (
     'django.contrib.sessions.middleware.SessionMiddleware',
@@ -64,15 +70,23 @@ MIDDLEWARE_CLASSES = (
     'django.contrib.auth.middleware.SessionAuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-
 )
 
-
+TEMPLATE_CONTEXT_PROCESSORS = (
+   'django.contrib.auth.context_processors.auth',
+   'django.core.context_processors.debug',
+   'django.core.context_processors.i18n',
+   'django.core.context_processors.media',
+   'django.core.context_processors.static',
+   'django.core.context_processors.tz',
+   'django.contrib.messages.context_processors.messages',
+)
 
 
 ROOT_URLCONF = 'quiz.urls'
 
 WSGI_APPLICATION = 'quiz.wsgi.application'
+
 
 
 #SESSION_ENGINE = 'mongoengine.django.sessions'
@@ -91,6 +105,7 @@ DATABASES = {
         'PORT': '5432',
     }
 }
+
 '''
 #Old Sqlite Database
 DATABASES = {
@@ -118,6 +133,18 @@ USE_L10N = True
 
 USE_TZ = True
 
+LOGIN_REDIRECT_URL = '/djsite'
+
+
+SOCIAL_AUTH_FACEBOOK_KEY = '1265904420128016'
+SOCIAL_AUTH_FACEBOOK_SECRET = '036034a21a718b32c60a4676af2d6d59'
+
+
+SOCIAL_AUTH_GOOGLE_OAUTH2_KEY = '8507...kg6.apps.googleusercontent.com'
+SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET = 'gUzw...CD32-'
+
+SOCIAL_AUTH_TWITTER_KEY = 'lNx...yQH8u'
+SOCIAL_AUTH_TWITTER_SECRET = '8virx...Div4dwB'
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.7/howto/static-files/

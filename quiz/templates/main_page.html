@@ -12,7 +12,7 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 
 <link href="{% static 'css/bootstrap.css' %}" rel="stylesheet" type="text/css" media="all" />
 <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
-
+<link href="{% static 'css/heart.css' %}" rel="stylesheet">
 
 <link href="{% static 'css/style.css' %}" rel="stylesheet" type="text/css" media="all" />	
 <!--//theme-style-->
@@ -27,7 +27,7 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 	<div class="container">
 		<div class="head-top">
 			<div class="logo">
-				<div class="banner-text"><h2>Intestellar Quiz
+				<div class="banner-text"><h2>Interstellar Quiz
 				</h2>
 					<p>Summit 16 </p>
  			    </div>
@@ -50,19 +50,31 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 	<div class="container">
 		<div class="col-md-6 footer-left">
 			<h3>Information</h3>
-			<p class="para">Quiz Information</p>
+			<p class="para">Interstellar is an Online Quiz Conductued As part of the Summit 16 Technocultural Event</p>
 			
 		</div>
 		<div class="col-md-6 footer-right">
 			<h3>Contact Us</h3>
+			<div class="col-md-6 footer-left">
+			<p class="para">For Issues Regarding the Website:-</p>
+			</div>
 			<ul class="con-icons">
 				<li><span class="glyphicon glyphicon-phone" aria-hidden="true"></span>+9562854642</li>
-				<li><a href="mailto:info@example.com"><span class="glyphicon glyphicon-envelope" aria-hidden="true"></span>info@test.com</a></li>
+				<li><a href="mailto:info@example.com"><span class="glyphicon glyphicon-envelope" aria-hidden="true"></span>vichuhari100@gmail.com</a></li>
 			</ul>
 		</div>
 		<div class="clearfix"></div>
 	</div>
 </div>
 <!--//footer-->
+
+<div class="signature">
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+ <p> Made With Django <i class="much-heart"></i> Summit 16 </p>
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+
+  </div>
+        {%csrf_token%}
+</form>
 </body>
 </html>
