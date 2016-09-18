@@ -23,8 +23,8 @@ TEMPLATE_DIRS = (
     os.path.join(BASE_DIR, 'templates'),
 )
 
-STATIC_ROOT= "quiz/staticfiles"
-STATIC_URL = '/static/'
+STATIC_ROOT= "staticfiles"
+STATIC_URL = 'static'
 
 STATICFILES_DIRS = (
     os.path.join(BASE_DIR, 'static'),
@@ -40,9 +40,9 @@ SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
 
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
-TEMPLATE_DEBUG = False
+TEMPLATE_DEBUG = True
 
 ALLOWED_HOSTS = ['*'] 
 # Application definition
