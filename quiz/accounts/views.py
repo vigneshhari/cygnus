@@ -3,6 +3,7 @@ from django.http import HttpResponse
 from django.shortcuts import render
 from django.http import JsonResponse
 from models import User_Account
+from django.db.models import Max
 from django.http import HttpResponseRedirect
 import smtplib
 from email.mime.multipart import MIMEMultipart
@@ -67,13 +68,15 @@ def signupprocess(request):
 	except Exception, e:
 		dict['signupmessage'] = "Enter a valid phone number"
 		return render(request,'login.html',dict)
-	data = User_Account.objects.all();vals = 0
+	data = User_Account.objects.all().order_by('-user_id')
 	email_check = User_Account.objects.all().filter(mail = mail)
 	for y in email_check :
 		dict['signupmessage'] = "This Email-Address is already in use . Please try again with another Email "
 		return render(request,'login.html',dict)
-	for e in data :vals+=1
-	new_user_id = vals +  1
+	val = 0
+	for i in data:
+		if(i.user_id > val):val = i.user_id;break
+	new_user_id =  val +  1
 	vericode = ''.join(random.choice('0123456789ABCDEF') for i in range(16))
 	print vericode 
 	outer = MIMEMultipart('alternative')
