@@ -10,9 +10,9 @@ def dash(request):
 	try:
 		_id = request.session['logid']
 		vericode = request.session['vericode']
+		acc = User_Account.objects.all().filter(user_id = _id)
 	except Exception, e:
 		return render(request,'login.html',{'loginmessage' : 'Please Login Again to Continue'  })
-	acc = User_Account.objects.all().filter(user_id = _id)
 	quiz = Quiz_history.objects.all().filter(user_id = _id)
 	quiz_info = Quiz.objects.all() 
 	for h in acc:
@@ -34,9 +34,9 @@ def attempted(request):
 	try:
 		_id = request.session['logid']
 		vericode = request.session['vericode']
+		acc = User_Account.objects.all().filter(user_id = _id)
 	except Exception, e:
 		return render(request,'login.html',{'loginmessage' : 'Please Login Again to Continue'  })
-	acc = User_Account.objects.all().filter(user_id = _id)
 	for h in acc:
 		name = h.name
 		check = h.vericode
@@ -53,9 +53,9 @@ def avaliable(request):
 	try:
 		_id = request.session['logid']
 		vericode = request.session['vericode']
+		acc = User_Account.objects.all().filter(user_id = _id)
 	except Exception, e:
 		return render(request,'login.html',{'loginmessage' : 'Please Login Again to Continue'  })
-	acc = User_Account.objects.all().filter(user_id = _id)
 	for h in acc:
 		name = h.name
 		check = h.vericode
@@ -77,9 +77,9 @@ def attempt(request):
 	try:
 		_id = request.session['logid']
 		vericode = request.session['vericode']
+		acc = User_Account.objects.all().filter(user_id = _id)
 	except Exception, e:
 		return render(request,'login.html',{'loginmessage' : 'Please Login Again to Continue'  })
-	acc = User_Account.objects.all().filter(user_id = _id)
 	for h in acc:
 		name = h.name
 		check = h.vericode
@@ -106,9 +106,9 @@ def validate(request):
 		quizid = request.session['quizid']
 		_id = request.session['logid']
 		vericode = request.session['vericode']
+		acc = User_Account.objects.all().filter(user_id = _id)
 	except Exception, e:
 		return render(request,'login.html',{'loginmessage' : 'Please Login Again to Continue'  })
-	acc = User_Account.objects.all().filter(user_id = _id)
 	for h in acc:
 		name = h.name
 		check = h.vericode
@@ -189,9 +189,9 @@ def rank(request):
 	try:
 		_id = request.session['logid']
 		vericode = request.session['vericode']
+		acc = User_Account.objects.all().filter(user_id = _id)
 	except Exception, e:
 		return render(request,'login.html',{'loginmessage' : 'Please Login Again to Continue'  })
-	acc = User_Account.objects.all().filter(user_id = _id)
 	for h in acc:
 		name = h.name
 		check = h.vericode
