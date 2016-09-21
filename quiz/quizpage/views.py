@@ -92,13 +92,14 @@ def attempt(request):
 	quizinfo = Quiz.objects.all().filter(quiz_id = quizid)
 	for i in quizinfo:
 		quizname = i.quizname
+		link = i.quiz_link
 	request.session['quizid'] = quizid
 	temp = 1
 	data = []
 	for e in quizdata:
 		data.append({'qid' : temp , 'question' : e.question , 'question_type' : e.question_type , 'desc' :e.question_desc ,'Option1' : e.Option1 ,'Option2' : e.Option2 ,'Option3' : e.Option3 ,'Option4' : e.Option4})
 		temp = temp + 1
-	return render(request,'quiz.html',{'name' : name , 'data' : data ,'quizname':quizname})
+	return render(request,'quiz.html',{'name' : name , 'data' : data ,'quizname':quizname , 'link' : link})
 
 def validate(request):
 	try:
@@ -136,23 +137,20 @@ def validate(request):
 	for i in quizdata:
 		check = []
 		
+		score = 10 - day
+
 		if(i.question_type == "image"):
 			qtype = 1
 			val = request.GET.get(str(temp),'')
 			if(i.question_clue == 1):
-				if(i.question_desc.strip() == ""):
-					score = 5
-				if(int(day) == 0  and i.answer.lower().strip(" ") == val.lower().strip(" ")):
+				score += 5
+				if(i.answer.lower().strip(" ") == val.lower().strip(" ")):
 					score +=10
-				elif(i.answer.lower().strip(" ") == val.lower().strip(" ")):
-					score += 11
 				else:
 					score = 0
 			elif(i.question_clue == 0):
-				if(int(day) == 0  and i.answer.lower().strip(" ") == val.lower().strip(" ")):
-					score = 15
-				elif(i.answer.lower().strip(" ") == val.lower().strip(" ")):
-					score += 11	
+				if(i.answer.lower().strip(" ") == val.lower().strip(" ")):
+					score += 10
 				else:
 					score = 0
 		#check box type questions not implemented
