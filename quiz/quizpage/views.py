@@ -42,7 +42,12 @@ def attempted(request):
 		check = h.vericode
 	if(check != vericode):return render(request,'login.html',{'loginmessage' : 'Please Login Again to Continue'  })
 	data = Quiz_history.objects.all().filter(user_id = _id)
-	return render(request,'quizold.html',{'name' : name , 'data' : data })
+	dat = []
+	for n in data:
+		temp = Quiz.objects.all().filter(quiz_id = n.quiz_id)
+		for t in temp:
+			dat.append({'name' : t.quizname , 'score' : n.score , 'date' : n.Date})
+	return render(request,'quizold.html',{'name' : name , 'data' : dat })
 
 def avaliable(request):
 	try:
