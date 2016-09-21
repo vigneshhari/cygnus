@@ -43,11 +43,13 @@ def attempted(request):
 	if(check != vericode):return render(request,'login.html',{'loginmessage' : 'Please Login to Continue'  })
 	data = Quiz_history.objects.all().filter(user_id = _id)
 	dat = []
+	num = 0 ;
 	for n in data:
+		num = num + 1
 		temp = Quiz.objects.all().filter(quiz_id = n.quiz_id)
 		for t in temp:
 			dat.append({'name' : t.quizname , 'score' : n.score , 'date' : n.Date})
-	return render(request,'quizold.html',{'name' : name , 'data' : dat })
+	return render(request,'quizold.html',{'name' : name , 'data' : dat , 'num' : num})
 
 def avaliable(request):
 	try:
@@ -65,13 +67,15 @@ def avaliable(request):
 	done_quiz = []
 	lis = []
 	done = 0
+	num = 0
 	for k in quiz:
 		done = done + 1
 		done_quiz.append(k.quiz_id)
 	for i in quiz_info:
 		if(i.quiz_id not in done_quiz):
+			num = num + 1
 			lis.append({ 'quizid' : i.quiz_id , 'quizname' :i.quizname })
-	return render(request,'newquiz.html',{'name' : name , 'data' : lis ,'link':"/quiz/attempt?id="})
+	return render(request,'newquiz.html',{'name' : name , 'data' : lis ,'link':"/quiz/attempt?id=" , 'num' : num})
 
 def attempt(request):
 	try:
