@@ -12,7 +12,6 @@ def dash(request):
 		vericode = request.session['vericode']
 	except Exception, e:
 		return render(request,'login.html',{'loginmessage' : 'Please Login Again to Continue'  })
-	print _id , vericode
 	acc = User_Account.objects.all().filter(user_id = _id)
 	quiz = Quiz_history.objects.all().filter(user_id = _id)
 	quiz_info = Quiz.objects.all() 
@@ -92,8 +91,7 @@ def attempt(request):
 	temp = 1
 	data = []
 	for e in quizdata:
-		print temp
-		data.append({'qid' : temp , 'question' : e.question , 'question_type' : e.question_type , 'Option1' : e.Option1 ,'Option2' : e.Option2 ,'Option3' : e.Option3 ,'Option4' : e.Option4})
+		data.append({'qid' : temp , 'question' : e.question , 'question_type' : e.question_type , 'desc' :e.question_desc ,'Option1' : e.Option1 ,'Option2' : e.Option2 ,'Option3' : e.Option3 ,'Option4' : e.Option4})
 		temp = temp + 1
 	return render(request,'quiz.html',{'name' : name , 'data' : data ,'quizname':quizname})
 
@@ -119,15 +117,68 @@ def validate(request):
 	quizdata = Quiz_data.objects.all().filter(quiz_id = quizid)
 	temp = 1
 	score = 0
+	finscore = 0;
+	qtype = 0
+	sc = 0 ;
+
+	for d in Quiz.objects.all().filter(quiz_id = quizid):
+				qtime = d.creationdate;
+				qtime = qtime.replace(tzinfo=None)
+				diff = datetime.datetime.now() - qtime
+				seconds = diff.total_seconds()
+				day = seconds // (3600 * 24)
+
 	for i in quizdata:
-		val = request.GET.get(str(temp),'')
-		if(i.answer.lower() == val.lower()):
-			score += 10
+		check = []
+		
+		if(i.question_type == "image"):
+			qtype = 1
+			val = request.GET.get(str(temp),'')
+			if(i.question_clue == 1):
+				if(i.question_desc.strip() == ""):
+					score = 5
+				if(int(day) == 0  and i.answer.lower().strip(" ") == val.lower().strip(" ")):
+					score +=10
+				elif(i.answer.lower().strip(" ") == val.lower().strip(" ")):
+					score += 11
+				else:
+					score = 0
+			elif(i.question_clue == 0):
+				if(int(day) == 0  and i.answer.lower().strip(" ") == val.lower().strip(" ")):
+					score = 15
+				elif(i.answer.lower().strip(" ") == val.lower().strip(" ")):
+					score += 11	
+				else:
+					score = 0
+		#check box type questions not implemented
+		'''	
+		if(i.question_type == "check"):
+			check = request.GET.getlist(str(temp))
+			answer = i.answer.split("&")
+			qtype = 1 ;
+			for ind,tt in enumerate(check):check[ind] = str(tt).strip(" ")
+			for ind,tt in enumerate(answer):answer[ind] = str(tt).strip(" ")
+			for ans in answer:
+				if(ans in check):score += 10
+				else:score -= 15
+			for ans in check:
+				if(ans not in answer):score -= 15
+		'''
+		
+		
+		if(qtype == 0):
+			val = request.GET.get(str(temp),'')
+			if(i.answer.lower() == val.lower()):
+				score += 10
+		if(score != 0):
+			score -= int(day)
+		finscore = score + finscore
+		score = 0		
 		temp = temp + 1
 	print score
-	hist = Quiz_history(quiz_id = quizid , user_id = _id , score = score , Date = datetime.datetime.now())
-	hist.save()
-	score = score + oldscore
+	hist = Quiz_history(quiz_id = quizid , user_id = _id , score = finscore , Date = datetime.datetime.now())
+	#hist.save()
+	score = finscore + oldscore
 	User_Account.objects.all().filter(user_id = _id).update(score = score)
 	return HttpResponseRedirect('/quiz/dash')
 

@@ -54,11 +54,67 @@
 </ul>
 
 {%endif%} 
-   
+
+
+  {%if e.question_type == "check"%}
+
+   <h2>{{e.question}}</h2>
+  <ul>
+  <li>
+    <input type="checkbox" id="{{e.Option1}}" name="{{e.qid}}" value="{{e.Option1}}" selected="selected">
+    <label for="{{e.Option1}}">{{e.Option1}}</label>
+  </li>
+  <li>
+    <input type="checkbox" id="{{e.Option2}}" name="{{e.qid}}" value="{{e.Option2}}">
+    <label for="{{e.Option2}}">{{e.Option2}}</label>
+    
+  </li>
+  {%if e.Option3 != "null"%}
+  <li>
+    <input type="checkbox" id="{{e.Option3}}" name="{{e.qid}}" value="{{e.Option3}}">
+    <label for="{{e.Option3}}">{{e.Option3}}</label>
+  </li>
+  {%endif%} 
+  {%if e.Option4 != "null"%}
+  <li>
+    <input type="checkbox" id="{{e.Option4}}" name="{{e.qid}}" value="{{e.Option4}}">
+    <label for="{{e.Option4}}">{{e.Option4}}</label>
+  </li>
+  {%endif%}   
+</ul>
+  {%endif%}   
+
+
 {%if e.question_type == "text"%}
   <h2>{{e.question}}</h2>
   <input class="input-field col s12" type="text" name="{{e.qid}}" placeholder="Enter The Answer Here" value="">
 {%endif%}
+
+{%if e.question_type == "image"%}
+  <h2>{{e.question}}</h2>
+  {%if e.desc != " " %}
+  <h2>Clue:
+  {%endif%}
+  <h2>{{e.desc}}</h2>
+  <span style="display:block; height: 10px;"></span>
+    <span style="display:block; height: 10px;"></span>
+  <img class="responsive-img" src="{{e.Option1}}">
+    {%if e.Option2 != "null"%}
+      <span style="display:block; height: 10px;"></span>
+  <img class="responsive-img" src="{{e.Option2}}">
+    {%endif%}
+        {%if e.Option3 != "null"%}
+      <span style="display:block; height: 10px;"></span>
+  <img class="responsive-img" src="{{e.Option3}}">
+    {%endif%}
+        {%if e.Option4 != "null"%}
+      <span style="display:block; height: 10px;"></span>
+  <img class="responsive-img" src="{{e.Option4}}">
+    {%endif%}
+      <span style="display:block; height: 10px;"></span>
+  <input class="input-field col s12" type="text" name="{{e.qid}}" placeholder="Enter The Answer Here" value="">
+{%endif%}
+
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 {%endfor%}

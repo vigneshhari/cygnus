@@ -96,7 +96,19 @@ WSGI_APPLICATION = 'quiz.wsgi.application'
 
 # Database
 # https://docs.djangoproject.com/en/1.7/ref/settings/#databases
+'''
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.mysql', 
+        'NAME': 'cecsummi_interstellar',
+        'USER': 'cecsummi_usr',
+        'PASSWORD': 'cecquiz@123',
+        'HOST': 'cecsummit.org',   # Or an IP Address that your DB is hosted on
+        'PORT': '3306',
+    }
+}
 
+'''
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',

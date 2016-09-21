@@ -10,7 +10,9 @@ class Quiz(models.Model):
 class Quiz_data(models.Model):
 	quiz_id = models.IntegerField()
 	question = models.CharField(max_length = 500)
+	question_desc = models.CharField(max_length = 5000)
 	question_type = models.CharField(max_length = 100)
+	question_clue = models.IntegerField()
 	Option1 = models.CharField(max_length = 100)
 	Option2 = models.CharField(max_length = 100)
 	Option3 = models.CharField(max_length = 100)
