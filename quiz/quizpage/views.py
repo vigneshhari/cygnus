@@ -177,7 +177,7 @@ def validate(request):
 		temp = temp + 1
 	print score
 	hist = Quiz_history(quiz_id = quizid , user_id = _id , score = finscore , Date = datetime.datetime.now())
-	#hist.save()
+	hist.save()
 	score = finscore + oldscore
 	User_Account.objects.all().filter(user_id = _id).update(score = score)
 	return HttpResponseRedirect('/quiz/dash')
