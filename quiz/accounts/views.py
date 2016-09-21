@@ -80,10 +80,10 @@ def signupprocess(request):
 	vericode = ''.join(random.choice('0123456789ABCDEF') for i in range(16))
 	print vericode 
 	outer = MIMEMultipart('alternative')
-	outer['Subject'] = "Verify Account For Interstellar"
+	outer['Subject'] = "Verify Account For Cygnus"
 	outer['To'] = mail
-	outer['From'] = 'interstellar@cecsummit.org'
-	verilink = "https://interstellarquiz.herokuapp.com/app/verified?id=" + str(new_user_id) + "&veri=" + vericode
+	outer['From'] = 'cygnus@cecsummit.org'
+	verilink = "https://cygnusquiz.herokuapp.com/app/verified?id=" + str(new_user_id) + "&veri=" + vericode
 	message = """
 			<h2>Hello {},</h2> 
 				<h3>This is a Verification Message</h3>
@@ -96,7 +96,7 @@ def signupprocess(request):
 				<p>If the above link is not working please enter the Verification Code Manually</p>
 				<br>
 				<h3>The verification code is  {}</h3>
-					<h4>Intestellar Team :)</h4>
+					<h4>Cygnus Team :)</h4>
 					<br>
 					 DO not Reply To this message 
 				""".format(name,verilink,vericode)
@@ -105,7 +105,7 @@ def signupprocess(request):
 	try:
 		server = smtplib.SMTP_SSL('terminal1.veeblehosting.com',465)
 		server.login('interstellar@cecsummit.org','interstellar123@')
-		server.sendmail('interstellar@cecsummit.org', mail,outer.as_string())
+		server.sendmail('cygnus@cecsummit.org', mail,outer.as_string())
 		server.quit()
 		print "Sent Email"
 	except Exception, e:
@@ -157,11 +157,10 @@ def sendveri(request):
 		test = False
 	if(test):
 				return render(request,"forpass.html",{'sendmessage' : "This Email Does not Exist in our Database"})
-	sender  = 'vignesh@cecsd.esy.es'
 	outer = MIMEMultipart('alternative')
 	outer['Subject'] = "Verify Account For Interstellar"
 	outer['To'] = email
-	outer['From'] = 'interstellar@cecsummit.org'
+	outer['From'] = 'cygnus@cecsummit.org'
 	message = """
 			<h2>Hello {},</h2> 
 				<h3>This is a Verification Message</h3>
@@ -171,7 +170,7 @@ def sendveri(request):
 				<br>	
 				<h3>The verification code is  {}</h3>
 
-					<h4>Intestellar Team :)</h4>
+					<h4>Cygnus Team :)</h4>
 					<br>
 					 DO not Reply To this message 
 				""".format(name,vericode)
@@ -180,7 +179,7 @@ def sendveri(request):
 	try:
 		server = smtplib.SMTP_SSL('terminal1.veeblehosting.com',465)
 		server.login('interstellar@cecsummit.org','interstellar123@')
-		server.sendmail('interstellar@cecsummit.org', email,outer.as_string())
+		server.sendmail('cygnus@cecsummit.org', email,outer.as_string())
 		server.quit()
 		print "Sent Email"
 	except Exception, e:
