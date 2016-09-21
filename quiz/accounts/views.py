@@ -117,7 +117,7 @@ def signupprocess(request):
 	response.set_cookie( 'user_id', new_user_id )
 	p = User_Account(mail = mail,password=password,user_id=new_user_id,name=name,phone_no=phone,vericode=vericode,verified=0,score=0)
 	p.save()
-	return render(request, 'login.html' , {'loginmessage' : "Please Log In To Continue"})
+	return render(request, 'login.html' , {'loginmessage' : " Signup Completed Please check Email and Login to continue "})
 
 def verified(request):
 	id = request.GET.get('id')
