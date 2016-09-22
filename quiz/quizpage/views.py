@@ -145,7 +145,7 @@ def validate(request):
 	for i in quizdata:
 		check = []
 		
-		score = 10 - day
+		score = 10 - day 
 
 		if(i.question_type == "image"):
 			qtype = 1
@@ -181,8 +181,7 @@ def validate(request):
 			val = request.GET.get(str(temp),'')
 			if(i.answer.lower() == val.lower()):
 				score += 10
-		if(score != 0):
-			score -= int(day)
+				
 		finscore = score + finscore
 		score = 0		
 		temp = temp + 1
