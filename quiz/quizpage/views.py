@@ -20,15 +20,23 @@ def dash(request):
 		name = h.name
 		score = h.score
 	if(check != vericode):return render(request,'login.html',{'loginmessage' : 'Please Login to Continue'  })
-	done = 0
 	avail = 0
 	done_quiz = []
+	lis = []
+	done = 0
+	num = 0
+	for i in quiz_info:
+		hist = Quiz_history.objects.all().filter(user_id = _id , quiz_id = i.quiz_id)
+		temp = 0
+		for q in hist:
+			if(q.quiz_id == i.quiz_id):temp = temp + 1
+			if(q.score > 0):temp = 9999
+		if(temp < i.attempt):
+			num = num + 1
 	for k in quiz:
 		done = done + 1
-		done_quiz.append(k.quiz_id)
-	for i in quiz_info:
-		if(i.quiz_id not in done_quiz):avail = avail + 1
-	return render(request,'dash.html',{'name' : name , 'score' : score, 'done':done , 'avail' : avail})
+
+	return render(request,'dash.html',{'name' : name , 'score' : score, 'done':done , 'avail' : num})
 
 def attempted(request):
 	try:
@@ -64,15 +72,16 @@ def avaliable(request):
 	if(check != vericode):return render(request,'login.html',{'loginmessage' : 'Please Login to Continue'  })
 	quiz = Quiz_history.objects.all().filter(user_id = _id)
 	quiz_info = Quiz.objects.all() 
-	done_quiz = []
 	lis = []
 	done = 0
 	num = 0
-	for k in quiz:
-		done = done + 1
-		done_quiz.append(k.quiz_id)
 	for i in quiz_info:
-		if(i.quiz_id not in done_quiz):
+		hist = Quiz_history.objects.all().filter(user_id = _id , quiz_id = i.quiz_id)
+		temp = 0
+		for q in hist:
+			if(q.quiz_id == i.quiz_id):temp = temp + 1
+			if(q.score > 0):temp = 9999
+		if(temp < i.attempt):
 			num = num + 1
 			lis.append({ 'quizid' : i.quiz_id , 'quizname' :i.quizname })
 	return render(request,'newquiz.html',{'name' : name , 'data' : lis ,'link':"/quiz/attempt?id=" , 'num' : num})
@@ -89,9 +98,6 @@ def attempt(request):
 		check = h.vericode
 	if(check != vericode):return render(request,'login.html',{'loginmessage' : 'Please Login to Continue'  })
 	quizid =request.GET.get('id')
-	quiz_history = Quiz_history.objects.all().filter(user_id = _id ,quiz_id = quizid)
-	for i in quiz_history:
-		return HttpResponseRedirect('/quiz/dash')
 	quizdata = Quiz_data.objects.all().filter(quiz_id = quizid)
 	quizinfo = Quiz.objects.all().filter(quiz_id = quizid)
 	for i in quizinfo:
@@ -121,9 +127,20 @@ def validate(request):
 		name = h.name
 		check = h.vericode
 	if(check != vericode):return render(request,'login.html',{'loginmessage' : 'Please Login to Continue'  })
-	quiz_history = Quiz_history.objects.all().filter(user_id = _id ,quiz_id = quizid)
-	for i in quiz_history:
-		return HttpResponseRedirect('/quiz/dash')
+	
+	attempt = 0
+	qobj = Quiz.objects.all().filter(quiz_id = quizid)
+	for obj in qobj:
+		attempt = obj.attempt
+
+	hist = Quiz_history.objects.all().filter(user_id = _id , quiz_id = quizid)
+	temp = 0
+	for q in hist:
+		if(q.quiz_id == quizid):temp = temp + 1;
+		if(q.score > 0):temp = 9999;
+	if(temp >= attempt):
+			return HttpResponseRedirect('/quiz/dash')
+
 	acc = User_Account.objects.all().filter(user_id = _id)
 	for h in acc:
 		oldscore = h.score
@@ -146,7 +163,8 @@ def validate(request):
 		check = []
 		
 		score = 10 - day 
-
+		if(temp != 0):
+			score = score - 5 
 		if(i.question_type == "image"):
 			qtype = 1
 			val = request.GET.get(str(temp),'')
@@ -181,7 +199,7 @@ def validate(request):
 			val = request.GET.get(str(temp),'')
 			if(i.answer.lower() == val.lower()):
 				score += 10
-				
+		if(score < 0):score = 0
 		finscore = score + finscore
 		score = 0		
 		temp = temp + 1

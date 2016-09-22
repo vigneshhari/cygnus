@@ -7,6 +7,7 @@ class Quiz(models.Model):
 	quizname = models.CharField(max_length = 500)
 	creationdate = models.DateTimeField()
 	quiz_link = models.CharField(max_length = 5000)
+	attempt = models.IntegerField()
 
 class Quiz_data(models.Model):
 	quiz_id = models.IntegerField()
