@@ -133,12 +133,12 @@ def validate(request):
 	for obj in qobj:
 		attempt = obj.attempt
 
-	hist = Quiz_history.objects.all().filter(user_id = _id , quiz_id = quizid)
-	temper = 0
-	for q in hist:
-		if(q.quiz_id == quizid):temper = temper + 1;
-		if(q.score > 0):temper = 9999;
-	if(temper >= attempt):
+	hist = Quiz_history.objects.all().filter(user_id = _id)
+	chk = 0
+	for obj in hist:
+		if(int(obj.quiz_id) == int(quizid)):chk = chk + 1
+		if(int(obj.score) > 0):chk = 9999
+	if(chk >= attempt):
 			return HttpResponseRedirect('/quiz/dash')
 
 	acc = User_Account.objects.all().filter(user_id = _id)
@@ -161,9 +161,8 @@ def validate(request):
 
 	for i in quizdata:
 		check = []
-		
 		score = 10 - day 
-		if(temper != 0):
+		if(chk != 0):
 			score = score - 5 
 		if(i.question_type == "image"):
 			qtype = 1
