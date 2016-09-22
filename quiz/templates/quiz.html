@@ -24,7 +24,7 @@
 
 {%for e in data%}
   {%if e.question_type == "option"%}
-<h2>{{e.question}}</h2>
+<h2>{{ e.question }}</h2>
   <ul>
   <li>
     <input type="radio" id="{{e.Option1}}" name="{{e.qid}}" value="{{e.Option1}}" selected="selected">
@@ -58,7 +58,7 @@
 
   {%if e.question_type == "check"%}
 
-   <h2>{{e.question}}</h2>
+   <h2>{{ e.question }}</h2>
   <ul>
   <li>
     <input type="checkbox" id="{{e.Option1}}" name="{{e.qid}}" value="{{e.Option1}}" selected="selected">
@@ -86,12 +86,14 @@
 
 
 {%if e.question_type == "text"%}
-  <h2>{{e.question}}</h2>
+  {% for q in e.question %}
+  <h2>{{ q.question }}</h2>  
+  {%endfor%}
   <input class="input-field col s12" type="text" name="{{e.qid}}" placeholder="Enter The Answer Here" value="">
 {%endif%}
 
 {%if e.question_type == "image"%}
-  <h2>{{e.question}}</h2>
+  <h3>{{e.question}}</h3>
   {%if e.desc != " " %}
   <h3>Clue:</h3>
   {%endif%}
@@ -120,6 +122,9 @@
 {%endfor%}
 <h5>.</h5>
 <span style="display:block; height: 200px;"></span>
+<a href="https://www.facebook.com" class="share-btn" >
+      <span class="share-btn-action share-btn-like">Share</span></a>
+  </p>
 </div>
 
 <h5>.</h5>
@@ -131,9 +136,7 @@
   </button>
   <br>
   <p>
-  <a href="https://www.facebook.com" class="share-btn" >
-      <span class="share-btn-action share-btn-like">Share</span></a>
-  </p>
+  
 
   &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
   <p>Summit 2016 <i class="much-heart"></i> Cygnus </p>

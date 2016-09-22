@@ -101,7 +101,11 @@ def attempt(request):
 	temp = 1
 	data = []
 	for e in quizdata:
-		data.append({'qid' : temp , 'question' : e.question , 'question_type' : e.question_type , 'desc' :e.question_desc ,'Option1' : e.Option1 ,'Option2' : e.Option2 ,'Option3' : e.Option3 ,'Option4' : e.Option4})
+		ques = []
+		for i in e.question.split("<>"):
+			print i;
+			ques.append({'question' : i})
+		data.append({'qid' : temp , 'question' : ques , 'question_type' : e.question_type , 'desc' :e.question_desc ,'Option1' : e.Option1 ,'Option2' : e.Option2 ,'Option3' : e.Option3 ,'Option4' : e.Option4})
 		temp = temp + 1
 	return render(request,'quiz.html',{'name' : name , 'data' : data ,'quizname':quizname , 'link' : link})
 
