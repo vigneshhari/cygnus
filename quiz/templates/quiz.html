@@ -93,7 +93,9 @@
 {%endif%}
 
 {%if e.question_type == "image"%}
-  <h3>{{e.question}}</h3>
+  {% for q in e.question %}
+  <h3>{{ q.question }}</h3>  
+  {%endfor%}
   {%if e.desc != " " %}
   <h3>Clue:</h3>
   {%endif%}
