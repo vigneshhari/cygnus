@@ -162,7 +162,7 @@ def validate(request):
 	for i in quizdata:
 		check = []
 		score = 10 - day 
-		if(chk != 0):
+		if(chk != 0 and attempt != 1):
 			score = score - 5 
 		if(i.question_type == "image"):
 			qtype = 1
