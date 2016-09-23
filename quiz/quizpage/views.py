@@ -167,6 +167,7 @@ def validate(request):
 		if(i.question_type == "image"):
 			qtype = 1
 			val = request.GET.get(str(temp),'')
+			val = ''.join(val.strip(" ").spit(" "))
 			if(i.question_clue == 0):
 				score += 5
 				if(i.answer.lower().strip(" ") == val.lower().strip(" ")):
