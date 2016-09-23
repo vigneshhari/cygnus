@@ -133,7 +133,7 @@ def validate(request):
 	for obj in qobj:
 		attempt = obj.attempt
 
-	hist = Quiz_history.objects.all().filter(user_id = _id)
+	hist = Quiz_history.objects.all().filter(user_id = _id , quiz_id = quizid)
 	chk = 0
 	for obj in hist:
 		if(int(obj.quiz_id) == int(quizid)):chk = chk + 1
